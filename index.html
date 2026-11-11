@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JARVIS AI</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #061323;
+  color: white;
+  text-align: center;
+  padding: 25px 15px;
+}
+h1 { color: #00d9ff; }
+.circle {
+  width: 145px;
+  height: 145px;
+  border: 4px solid #00d9ff;
+  border-radius: 50%;
+  margin: 35px auto;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 25px #00d9ff;
+  font-size: 28px;
+}
+button, select, input {
+  padding: 13px;
+  margin: 7px;
+  border-radius: 10px;
+  border: 1px solid #00d9ff;
+  background: #102b43;
+  color: white;
+}
+#answer {
+  margin-top: 20px;
+  padding: 15px;
+  background: #102b43;
+  border-radius: 12px;
+}
+</style>
+</head>
+<body>
+<h1>JARVIS AI</h1>
+<p>Your Personal Assistant</p>
+<div class="circle">JARVIS</div>
+
+<select id="voice">
+<option value="male">Male Voice</option>
+<option value="female">Female Voice</option>
+</select>
+
+<br>
+<input id="question" placeholder="Mujhse kuch pucho...">
+<button onclick="ask()">Send</button>
+<button onclick="speak()">🎤 Speak</button>
+
+<div id="answer">Namaste! Main JARVIS hoon.</div>
+
+<script>
+function ask() {
+ let q = document.getElementById("question").value;
+ let a = "Aapne kaha: " + q;
+ document.getElementById("answer").innerText = a;
+}
+function speak() {
+ let Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
+ if (!Speech) {
+  alert("Voice recognition is not supported in this browser.");
+  return;
+ }
+ let r = new Speech();
+ r.lang = "hi-IN";
+ r.onresult = function(e) {
+  document.getElementById("question").value =
+  e.results[0][0].transcript;
+  ask();
+ };
+ r.start();
+}
+</script>
+</body>
+</html>
